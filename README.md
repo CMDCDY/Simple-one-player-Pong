@@ -7,7 +7,7 @@
 
 --speed and hitbox size are measured in screen pixels
 
---intended for 1920x1080 display, haven't been able to test on others
+--intended for 1920x1080 display, haven't been able to test on others, plan on improving this
 
 --speed doesn't update until the playball (green) contacts a x-border or red/blue ball
 
@@ -42,3 +42,4 @@
 
 --Definitely plan to add a menu screen, choose 1 or 2 player, music, view high scores, etc.
 
+--No known bugs, please contact me about any found
