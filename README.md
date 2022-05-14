@@ -12,3 +12,9 @@ difficulty levels go as follows:
 5. originally was going to be one that would calculate the exact location of where the ball and edge of screen would meet, sadly had technical difficulties
 
 
+"COMPUTERSCIENCEFINAL" is the final version (as of now, will probably continue for fun)
+
+2-player-pong is a 2 player version, with signicant ghosting issues, should be an easy fix
+
+Xbox controller support in the future maybe?
+colour picker maybe?
