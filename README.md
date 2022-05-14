@@ -28,4 +28,6 @@
 
 --Xbox controller support in the future maybe?
 --colour picker maybe?
+--add high scores board?
 --speed doesn't update until the playball (green) contacts a x-border or red/blue ball
+
