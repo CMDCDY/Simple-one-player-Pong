@@ -416,17 +416,21 @@ def binding():
     t.bind('<A>', r74)
 
 
-
-t.bind('<w>', up)
-t.bind('<W>', up)
-t.bind('<S>', down)
-t.bind('<s>', down)
+def binding2():
+   while ballrun % 2 != 0:
+      t.bind('<w>', up)
+      t.bind('<W>', up)
+      t.bind('<S>', down)
+      t.bind('<s>', down)
+      
+      
 t.bind('<q>', stoppie)
 t.bind('<Q>', stoppie)
 
 t2 = threading.Thread(target=binding, name='t2')
 t2.start()
-
+keybind2 = threading.Thread(target=binding2, name='keybind2')
+keybind2.start(
 
 mainloop()
 
