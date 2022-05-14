@@ -9,7 +9,11 @@
 
 --intended for 1920x1080 display, haven't been able to test on others
 
+--speed doesn't update until the playball (green) contacts a x-border or red/blue ball
+
 --difficulty levels go as follows:
+
+--Hitboxes are very far from flushed out, hence the adjustment, for player choice
 
 1. ~50% chance to move randomly, ~50% chance to move towards y coordinate for playball (green)
 
@@ -24,10 +28,17 @@
 
 --"COMPUTERSCIENCEFINAL" is the final version (as of now, will probably continue for fun)
 
---2-player-pong is a 2 player version, with signicant ghosting issues, should be an easy fix
+--2-player-pong is a 2 player version, with signicant ghosting issues, should be an easy fix-theoretically
 
 --Xbox controller support in the future maybe?
+
 --colour picker maybe?
+
 --add high scores board?
---speed doesn't update until the playball (green) contacts a x-border or red/blue ball
+
+--no music mute choice, or cycling through short songs, audio was not a focus, maybe for the future?
+
+--colorful, maybe make things black and white to represent the old game theme? seperate version or choice in menus?
+
+--Definitely plan to add a menu screen, choose 1 or 2 player, music, view high scores, etc.
 
