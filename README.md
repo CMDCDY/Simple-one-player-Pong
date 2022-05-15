@@ -30,6 +30,8 @@
 
 --2-player-pong is a 2 player version, with signicant ghosting issues, should be an easy fix-theoretically
 
+--2-person-pong is a functioning 2 player version
+
 --Xbox controller support in the future maybe?
 
 --colour picker maybe?
