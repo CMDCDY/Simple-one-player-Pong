@@ -134,7 +134,7 @@ scorer.place(x=(width/2) + 16, y=75)
 scorel.place(x=(width/2) - 80, y=75)
 slider = tkinter.Scale(t, from_=8, to=35, orient='horizontal', length=100, bg='green', label="speed")
 slider.place(x=width/2, y=2)
-slider2 = tkinter.Scale(t, from_=60, to=75, orient='horizontal', length=100, bg='green', label="hitbox")
+slider2 = tkinter.Scale(t, from_=10, to=20, orient='horizontal', length=100, bg='green', label="Player Speed")
 slider2.place(x=width/2 -50 - 50, y=2)
 menu = tkinter.Button(t, text="=", width=4, bg="grey", command=stoppie2)
 menu.place(x=width-100, y=20)
@@ -147,6 +147,8 @@ else:
 hits = 0
 hitcounter = tkinter.Button(t, text=("hits=" + str(hits)), width=8, font=('Arial', 16), bg='purple')
 hitcounter.place(x=width - 228, y=20)
+updownball1 = 0
+updownball2 = 0
 
 
 def restart():
@@ -191,7 +193,7 @@ def restart():
    scorel.place(x=(width / 2) - 80, y=75)
    slider = tkinter.Scale(t, from_=8, to=35, orient='horizontal', length=100, bg='green', label="speed")
    slider.place(x=width / 2, y=2)
-   slider2 = tkinter.Scale(t, from_=60, to=75, orient='horizontal', length=100, bg='green', label="hitbox")
+   slider2 = tkinter.Scale(t, from_=10, to=20, orient='horizontal', length=100, bg='green', label="Player Speed")
    slider2.place(x=width / 2 - 50 - 50, y=2)
    menu = tkinter.Button(t, text="=", width=4, bg="grey", command=stoppie2)
    menu.place(x=width - 100, y=20)
@@ -204,22 +206,8 @@ def restart():
    hits = 0
    hitcounter = tkinter.Button(t, text=("hits=" + str(hits)), width=8, font=('Arial', 16), bg='purple')
    hitcounter.place(x=width - 228, y=20)
-
-
-def hitreset():
-   global hits
-   global hitcounter
-   hits = 0
-   hitcounter = tkinter.Button(t, text=("hits=" + str(hits)), width=8, font=('Arial', 16), bg='purple')
-   hitcounter.place(x=width - 228, y=20)
-
-
-def hitsup():
-   global hits
-   global hitcounter
-   hits = hits + 1
-   hitcounter = tkinter.Button(t, text=("hits=" + str(hits)), width=8, font=('Arial', 16), bg='purple')
-   hitcounter.place(x=width - 228, y=20)
+   updownball1 = 0
+   updownball2 = 0
 
 
 def rscored():
@@ -243,7 +231,6 @@ def rscored():
        momentlr = slider.get()
    hitreset()
    time.sleep(.5)
-
 
 
 def lscored():
@@ -270,34 +257,46 @@ def lscored():
 
 
 def up():
+   ball1momentup()
    canvas.delete(ball1.ball)
-   ball1.y -= 10
+   ball1.y -= slider2.get()
    if ball1.y < 25:
        ball1.y = 0
    ball1.ball = canvas.create_oval(ball1.circle(ball1.r, ball1.x, ball1.y), fill='blue', outline='pink')
 
 
 def down():
+  ball1momentdown()
   canvas.delete(ball1.ball)
-  ball1.y += 10
+  ball1.y += slider2.get()
   if ball1.y > height:
       ball1.y = height
   ball1.ball = canvas.create_oval(ball1.circle(ball1.r, ball1.x, ball1.y), fill='blue', outline='pink')
 
 
 def rdown():
+   ball2momentdown()
    if momentlr > -50:
       canvas.delete(ball2.ball)
-      ball2.y += 10
+      ball2.y += slider2.get()
       if ball2.y > height:
           ball2.y = height
       ball2.ball = canvas.create_oval(ball2.circle(ball2.r, ball2.x, ball2.y), fill='red', outline='green')
 
 
+def hitreset():
+   global hits
+   global hitcounter
+   hits = 0
+   hitcounter = tkinter.Button(t, text=("hits=" + str(hits)), width=8, font=('Arial', 16), bg='purple')
+   hitcounter.place(x=width - 228, y=20)
+
+
 def rup():
+   ball2momentup()
    if momentlr > -50:
       canvas.delete(ball2.ball)
-      ball2.y -= 10
+      ball2.y -= slider2.get()
       if ball2.y < 25:
           ball2.y = 0
       ball2.ball = canvas.create_oval(ball2.circle(ball2.r, ball2.x, ball2.y), fill='red', outline='green')
@@ -309,9 +308,11 @@ def ballmove():
   global scoreright
   global scoreleft
   global ballrun
+  global updownball2
+  hits = 0
   while ballrun % 2 != 0 and gamerun == 1:
-      time.sleep(0.05)
-      fishy = slider2.get()
+      time.sleep(0.07)
+      fishy = 65
       if scoreright == scoreleft:
           outie = "green"
       elif scoreright > scoreleft:
@@ -325,20 +326,39 @@ def ballmove():
           playball.y = playball.y - momentud
           momentud = momentud - momentud*2
       playball.ball = canvas.create_oval(playball.circle(playball.r, playball.x, playball.y), fill='green', outline=outie)
-      if playball.x < 120 and playball.y in range((int(ball1.y) - fishy), int(ball1.y) + fishy):
+      if playball.x < 120 and playball.y in range((int(ball1.y) - fishy), int(ball1.y) + fishy) or playball.y == ball1.y and playball.x < 120:
           q = ball1.y - playball.y
-          momentud = momentud - momentud*2 - q/2
+          if updownball1 == 1:
+              r = slider2.get() - slider2.get() * 2
+          elif updownball1 == -1:
+              r = slider2.get()
+          else:
+              r = 0
+          momentud = momentud - momentud*2 - q/2 + r
           momentlr = slider.get()
           hitsup()
       elif playball.x < 25:
           rscored()
-      if int(playball.x) > int(width) - 100 and int(playball.y) in range((int(ball2.y) - fishy), int(ball2.y) + fishy):
+      if int(playball.x) > int(width) - 120 and int(playball.y) in range((int(ball2.y) - fishy), int(ball2.y) + fishy) or playball.y == ball2.y and int(playball.x) > int(width) - 120:
           q = ball2.y - playball.y
-          momentud = momentud - momentud * 2 - q / 2
+          if updownball2 == 1:
+              r = slider2.get() - slider2.get() * 2
+          elif updownball2 == -1:
+              r = slider2.get()
+          else:
+              r = 0
+          momentud = momentud - momentud * 2 - q / 2 + r
           momentlr = slider.get() - slider.get() * 2
           hitsup()
       elif playball.x > (width - 25):
           lscored()
+
+
+def hitsup():
+    global hits
+    hits = hits + 1
+    hitcounter = tkinter.Button(t, text=("hits=" + str(hits)), width=8, font=('Arial', 16), bg='purple')
+    hitcounter.place(x=width - 228, y=20)
 
 
 def leave():
@@ -359,33 +379,64 @@ def binding():
     t.bind('<A>', r74)
 
 
+def ball1momentup():
+    updownball1 = 1
+
+
+def ball1momentdown():
+    updownball1 = -1
+
+
+def ball1nomoment():
+    updownball1 = 0
+
+
+def ball2momentup():
+    updownball2 = 1
+
+
+def ball2momentdown():
+    updownball2 = -1
+
+
+def ball2nomoment():
+    updownball2 = 0
+
+
 def binding2():
     while gamerun == 1:
         time.sleep(0.04)
         if keyboard.is_pressed("w"):
             up()
+            ball2nomoment()
             if keyboard.is_pressed("w+l"):
                 rdown()
             elif keyboard.is_pressed("w+o"):
                 rup()
         elif keyboard.is_pressed("s"):
             down()
+            ball2nomoment()
             if keyboard.is_pressed("s+l"):
                 rdown()
             elif keyboard.is_pressed("s+o"):
                 rup()
         elif keyboard.is_pressed("l"):
             rdown()
+            ball1nomoment()
             if keyboard.is_pressed("l+s"):
                 down()
             elif keyboard.is_pressed("l+w"):
                 up()
         elif keyboard.is_pressed("o"):
             rup()
+            ball1nomoment()
             if keyboard.is_pressed("o+s"):
                 down()
             elif keyboard.is_pressed("o+w"):
                 up()
+        else:
+            ball1nomoment()
+            ball2nomoment()
 
 
 t.bind('<q>', stoppie)
