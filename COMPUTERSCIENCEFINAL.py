@@ -381,14 +381,14 @@ def ballmove():
           playball.y = playball.y - momentud
           momentud = momentud - momentud*2
       playball.ball = canvas.create_oval(playball.circle(playball.r, playball.x, playball.y), fill='green', outline=outie)
-      if playball.x < 120 and playball.y in range((int(ball1.y) - fishy), int(ball1.y) + fishy):
+      if playball.x < 120 and playball.y in range((int(ball1.y) - fishy), int(ball1.y) + fishy) or playball.y == ball1.y and playball.x < 120:
           q = ball1.y - playball.y
           momentud = momentud - momentud*2 - q/2
           momentlr = slider.get()
           hitsup()
       elif playball.x < 25:
           rscored()
-      if int(playball.x) > int(width) - 100 and int(playball.y) in range((int(ball2.y) - fishy), int(ball2.y) + fishy):
+      if int(playball.x) > int(width) - 120 and int(playball.y) in range((int(ball2.y) - fishy), int(ball2.y) + fishy) or playball.y == ball2.y and int(playball.x) > int(width) - 120:
           q = ball2.y - playball.y
           momentud = momentud - momentud * 2 - q / 2
           momentlr = slider.get() - slider.get() * 2
